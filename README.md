@@ -11,9 +11,9 @@ Java Web Application Server 2022
 - HTTP Header, HTTP Body에 대해 공부
 
 ### 기타 학습
-- MIME 타입 학습
-- 자바 입출력 학습
-- 토비의 스프링 학습
+-[] MIME 타입 학습
+-[x] 자바 입출력 학습
+-[] 토비의 스프링 학습
 
 ### 미션 구현
 
