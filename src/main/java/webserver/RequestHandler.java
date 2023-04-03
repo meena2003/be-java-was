@@ -2,8 +2,7 @@ package webserver;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.nio.file.Files;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,16 +22,19 @@ public class RequestHandler implements Runnable {
                 connection.getPort());
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-            String line = br.readLine();
-            String url = HttpRequestUtils.getUrl(line);
 
-            while(!line.equals("")) {
-                logger.debug("header : {}", line);
-                line = br.readLine();
+            String requestLine = br.readLine();
+            logger.debug("request line : {}", requestLine);
+            String requestHeader;
+            while(!(requestHeader = br.readLine()).equals("")) {
+                logger.debug("header : {}", requestHeader);
             }
 
+            String url = HttpRequestUtils.getUrl(requestLine);
+            logger.debug("request url : {}", url);
+
             DataOutputStream dos = new DataOutputStream(out);
-            byte[] body = "Hello World".getBytes();
+            byte[] body = Files.readAllBytes(new File("src/main/resources/templates" + url).toPath());
             response200Header(dos, body.length);
             responseBody(dos, body);
         } catch (IOException e) {
