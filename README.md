@@ -2,7 +2,14 @@
 Java Web Application Server 2022
 
 
-## 프로젝트 정보 
+## 1주차 학습 계획 (4.3 ~ 4.7)
+## 종합 목표
+### HTTP 학습
+- HTTP 메소드의 형식과 기능을 공부
+- HTTP Request, HTTP Reponse의 차이를 공부
+- HTTP GET 메소드 학습
+- HTTP Header, HTTP Body에 대해 공부
+- MIME 타입 학습
+### 미션 구현
 
-이 프로젝트는 우아한 테크코스 박재성님의 허가를 받아 https://github.com/woowacourse/jwp-was 
-를 참고하여 작성되었습니다.
+### 학습 키워드 정리 ([깃허브 위키 바로가기](https://github.com/meena2003/be-java-was/wiki/%EC%9B%B9%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%95%99%EC%8A%B5-%ED%82%A4%EC%9B%8C%EB%93%9C))
