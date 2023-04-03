@@ -2,9 +2,12 @@ package webserver;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.HttpRequestUtils;
 
 public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
@@ -18,10 +21,11 @@ public class RequestHandler implements Runnable {
     public void run() {
         logger.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(),
                 connection.getPort());
-
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             String line = br.readLine();
+            String url = HttpRequestUtils.getUrl(line);
+
             while(!line.equals("")) {
                 logger.debug("header : {}", line);
                 line = br.readLine();
