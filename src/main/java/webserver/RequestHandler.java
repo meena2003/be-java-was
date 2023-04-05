@@ -3,7 +3,9 @@ package webserver;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.StringTokenizer;
 
+import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
@@ -22,21 +24,25 @@ public class RequestHandler implements Runnable {
                 connection.getPort());
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            HttpRequestUtils httpRequestUtils = new HttpRequestUtils(br);
 
-            String requestLine = br.readLine();
-            logger.debug("request line : {}", requestLine);
-            String requestHeader;
-            while(!(requestHeader = br.readLine()).equals("")) {
-                logger.debug("header : {}", requestHeader);
-            }
+//            String requestLine = br.readLine();
+//            logger.debug("request line : {}", requestLine);
+//            String requestHeader;
+//            while(!(requestHeader = br.readLine()).equals("")) {
+//                logger.debug("header : {}", requestHeader);
+//            }
 
-            String url = HttpRequestUtils.getUrl(requestLine);
+            String url = httpRequestUtils.getRequestLineHttpURI();
             logger.debug("request url : {}", url);
+
 
             DataOutputStream dos = new DataOutputStream(out);
             byte[] body = Files.readAllBytes(new File("src/main/resources/templates" + url).toPath());
             response200Header(dos, body.length);
             responseBody(dos, body);
+            connection.close();
+
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
