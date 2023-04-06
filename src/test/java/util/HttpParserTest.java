@@ -67,6 +67,14 @@ public class HttpParserTest {
     }
 
     @Test
+    @DisplayName("올바른 http root uri path 반환해야 함")
+    public void extract_uriRootUri_from_requestLine() {
+        assertThat(parseUriRootPath(requestLine1)).isEqualTo("/user");
+        assertThat(parseUriRootPath(requestLine2)).isEqualTo("/login");
+        assertThat(parseUriRootPath(requestLine3)).isEqualTo("/files");
+    }
+
+    @Test
     @DisplayName("올바른 request header 반환해야 함")
     public void extract_requestHeader_from_requestLine() throws IOException {
         LinkedHashMap<String, String> expected = new LinkedHashMap();

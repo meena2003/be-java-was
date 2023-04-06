@@ -32,21 +32,37 @@ public class HttpParser {
      * @return http URI (예시: /index.html, /user/create?id=core&password=123&email=core@naver.com)
      */
     public static String parseUri(String requestLine) {
-        String httpURI = requestLine.split(" ")[1];
-        log.debug("httpURI : {}", httpURI);
-        return httpURI;
+        String httpUri = requestLine.split(" ")[1];
+        log.debug("httpURI : {}", httpUri);
+        return httpUri;
     }
 
     /**
-     * URI중 request parameter를 제외한 경로만 파싱하여 반환합니다.
+     * uri중 request parameter를 제외한 경로만 파싱하여 반환합니다.
      *
      * @param requestLine
      * @return http URI (예시: /index.html, /user/create)
      */
     public static String parseUriPath(String requestLine) {
-        String httpURIPath = parseUri(requestLine).split("\\?")[0];
-        log.debug("httpURIPath : {}", httpURIPath);
-        return httpURIPath;
+        String httpUriPath = parseUri(requestLine).split("\\?")[0];
+        log.debug("httpURIPath : {}", httpUriPath);
+        return httpUriPath;
+    }
+
+    /**
+     * uri 루트 경로만 파싱하여 반환합니다.
+     * @param requestLine
+     * @return http root uri (예시: /user, /article)
+     */
+    public static String parseUriRootPath(String requestLine) {
+        String httpUriPath = parseUriPath(requestLine);
+        int index = httpUriPath.indexOf("/", 1);
+        if (index == -1) {
+            return httpUriPath;
+        }
+        String httpUriRootPath = httpUriPath.substring(0, index);
+        log.debug("httpUriRootPath : {}", httpUriRootPath);
+        return httpUriRootPath;
     }
 
     /**
