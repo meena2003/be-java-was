@@ -1,14 +1,13 @@
 package webserver;
 
-import java.io.*;
-import java.net.Socket;
-import java.nio.file.Files;
-import java.util.StringTokenizer;
-
-import model.User;
+import controller.HttpRequestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.file.Files;
 
 public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
@@ -25,20 +24,11 @@ public class RequestHandler implements Runnable {
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 
-            HttpRequestUtils httpRequestUtils = new HttpRequestUtils(br);
-
-//            String requestLine = br.readLine();
-//            logger.debug("request line : {}", requestLine);
-//            String requestHeader;
-//            while(!(requestHeader = br.readLine()).equals("")) {
-//                logger.debug("header : {}", requestHeader);
-//            }
-
-            String url = httpRequestUtils.getRequestLineHttpURI();
-            httpRequestUtils.printHttpRequest(); // http request 출력하기
+            HttpRequest httpRequest = new HttpRequest(br);
+            String uri = httpRequest.getHttpUri();
 
             DataOutputStream dos = new DataOutputStream(out);
-            byte[] body = Files.readAllBytes(new File("src/main/resources/templates" + url).toPath());
+            byte[] body = Files.readAllBytes(new File("src/main/resources/templates" + uri).toPath());
             response200Header(dos, body.length);
             responseBody(dos, body);
             connection.close();
