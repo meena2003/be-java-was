@@ -71,7 +71,7 @@ public class HttpParser {
     public static Map<String, String> parseRequestHeader(BufferedReader br) throws IOException {
         Map<String, String> requestHeader = new LinkedHashMap<>();
         String headerLine;
-        while ((headerLine = br.readLine()) != null) {
+        while (!(headerLine = br.readLine()).equals("")) {
             log.debug("header : {}", headerLine);
             String[] tokens = headerLine.split(": ");
             requestHeader.put(tokens[0], tokens[1]);
@@ -87,6 +87,7 @@ public class HttpParser {
      */
     public static Map<String, String> parseQueryParameter(String requestLine) {
         String[] queryString = parseUri(requestLine).split("\\?");
+        log.debug("querySring = {}", Arrays.toString(queryString));
         log.debug("queryString = {}", queryString);
 
         if (queryString.length == 1) {

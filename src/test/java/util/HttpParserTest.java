@@ -29,7 +29,9 @@ public class HttpParserTest {
                 "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36\n" +
                 "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\n" +
                 "Accept-Encoding: gzip, deflate, br\n" +
-                "Accept-Language: en-US,en;q=0.5\n")));
+                "Accept-Language: en-US,en;q=0.5\n" +
+                "\r\n"
+        )));
         requestLine1 = "GET /user/create?userId=core&password=123&name=kim&email=core@naver.com HTTP/1.1";
         requestLine2 = "POST /login HTTP/1.1";
         requestLine3 = "PUT /files/document.txt HTTP/1.1";
