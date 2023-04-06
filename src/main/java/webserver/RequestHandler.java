@@ -2,6 +2,7 @@ package webserver;
 
 import config.AppConfig;
 import controller.Controller;
+import controller.FrontController;
 import controller.HttpRequestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +31,9 @@ public class RequestHandler implements Runnable {
             DataOutputStream dos = new DataOutputStream(out);
             HttpResponse httpResponse = new HttpResponse(dos);
 
-            String uri = httpRequest.getHttpUri();
+            FrontController frontController = new FrontController();
+            frontController.handleRequest(httpRequest, httpResponse);
 
-            byte[] body = Files.readAllBytes(new File("src/main/resources/templates" + uri).toPath());
-            httpResponse.response200Header(dos, body.length);
-            httpResponse.responseBody(dos, body);
             connection.close();
 
         } catch (IOException e) {
