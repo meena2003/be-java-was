@@ -14,7 +14,7 @@ public class RequestHeader {
         convertRequestHeaderInfoToMap(requestHeaderInfo);
     }
 
-    // requestHeader를 HeaderName과 HeaderValue로 나누어 HashMap에 저장
+    // requestHeader를 HeaderName과 HeaderValue로 나누어 LinkedHashMap에 저장
     private void convertRequestHeaderInfoToMap(BufferedReader requestHeaderInfo) throws IOException {
         String headerLine;
         while (!(headerLine = requestHeaderInfo.readLine()).equals("")) {

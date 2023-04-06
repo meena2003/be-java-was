@@ -18,9 +18,12 @@ public class HttpRequestUtils {
         requestHeader = new RequestHeader(br);
     }
 
-    public void printHttpRequestAllHeaders() {
+    public void printHttpRequest() {
+        System.out.println("request line : " + requestLine.getHTTP_METHOD() + " " + requestLine.getHTTP_URI() + " " + requestLine.getHTTP_VERSION());
         System.out.println(requestHeader.getRequestHeaders());
     }
+
+
 
     public String getRequestLineHttpURI() {
         return requestLine.getHTTP_URI();

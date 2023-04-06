@@ -24,6 +24,7 @@ public class RequestHandler implements Runnable {
                 connection.getPort());
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+
             HttpRequestUtils httpRequestUtils = new HttpRequestUtils(br);
 
 //            String requestLine = br.readLine();
@@ -34,8 +35,7 @@ public class RequestHandler implements Runnable {
 //            }
 
             String url = httpRequestUtils.getRequestLineHttpURI();
-            logger.debug("request url : {}", url);
-
+            httpRequestUtils.printHttpRequest(); // http request 출력하기
 
             DataOutputStream dos = new DataOutputStream(out);
             byte[] body = Files.readAllBytes(new File("src/main/resources/templates" + url).toPath());
