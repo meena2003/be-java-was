@@ -1,16 +1,12 @@
 package webserver;
 
 //import config.AppConfig;
-import controller.Controller;
 import controller.FrontController;
-import controller.HttpRequestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.HttpRequestUtils;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
 
 public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);

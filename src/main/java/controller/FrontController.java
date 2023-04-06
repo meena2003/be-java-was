@@ -12,6 +12,7 @@ import java.util.Map;
 public class FrontController {
     private static final Logger log = LoggerFactory.getLogger(FrontController.class);
     private Map<String, Handler> handlerMap;
+    private Controller controller;
 
     public FrontController() {
         handlerMap = new HashMap<>();
@@ -47,6 +48,8 @@ public class FrontController {
     public class UserHandler implements Handler {
         @Override
         public void handle(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+            controller = new UserController();
+            controller.run(httpRequest);
             String uri = httpRequest.getHttpUriPath();
             byte[] body = httpResponse.readFile(uri);
             httpResponse.response200Header(body.length);
