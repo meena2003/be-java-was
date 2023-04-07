@@ -28,7 +28,11 @@ public class RequestHandler implements Runnable {
             HttpResponse httpResponse = new HttpResponse(dos);
 
             FrontController frontController = new FrontController();
-            frontController.handleRequest(httpRequest, httpResponse);
+            String viewName = frontController.handleRequest(httpRequest);
+
+
+
+
 
             connection.close();
 
