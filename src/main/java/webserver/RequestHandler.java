@@ -1,12 +1,12 @@
 package webserver;
 
-import java.io.*;
-import java.net.Socket;
-import java.nio.file.Files;
-
+//import config.AppConfig;
+import controller.FrontController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.HttpRequestUtils;
+
+import java.io.*;
+import java.net.Socket;
 
 public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
@@ -22,41 +22,16 @@ public class RequestHandler implements Runnable {
                 connection.getPort());
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-
-            String requestLine = br.readLine();
-            logger.debug("request line : {}", requestLine);
-            String requestHeader;
-            while(!(requestHeader = br.readLine()).equals("")) {
-                logger.debug("header : {}", requestHeader);
-            }
-
-            String url = HttpRequestUtils.getUrl(requestLine);
-            logger.debug("request url : {}", url);
+            HttpRequest httpRequest = new HttpRequest(br);
 
             DataOutputStream dos = new DataOutputStream(out);
-            byte[] body = Files.readAllBytes(new File("src/main/resources/templates" + url).toPath());
-            response200Header(dos, body.length);
-            responseBody(dos, body);
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-    }
+            HttpResponse httpResponse = new HttpResponse(dos);
 
-    private void response200Header(DataOutputStream dos, int lengthOfBodyContent) {
-        try {
-            dos.writeBytes("HTTP/1.1 200 OK \r\n");
-            dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
-            dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
-            dos.writeBytes("\r\n");
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-    }
+            FrontController frontController = new FrontController();
+            frontController.handleRequest(httpRequest, httpResponse);
 
-    private void responseBody(DataOutputStream dos, byte[] body) {
-        try {
-            dos.write(body, 0, body.length);
-            dos.flush();
+            connection.close();
+
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

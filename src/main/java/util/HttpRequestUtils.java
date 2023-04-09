@@ -1,8 +1,12 @@
 package util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class HttpRequestUtils {
-    public static String getUrl(String requestLine) {
-        String[] tokens = requestLine.split(" ");
-        return tokens[1];
+    private static final Logger logger = LoggerFactory.getLogger(HttpRequestUtils.class);
+
+    public HttpRequestUtils() {
     }
+
 }
