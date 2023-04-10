@@ -1,9 +1,9 @@
 package webserver;
 
 //import config.AppConfig;
-import controller.FrontController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import view.ViewResolver;
 
 import java.io.*;
 import java.net.Socket;
@@ -24,18 +24,24 @@ public class RequestHandler implements Runnable {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             HttpRequest httpRequest = new HttpRequest(br);
 
-            DataOutputStream dos = new DataOutputStream(out);
-            HttpResponse httpResponse = new HttpResponse(dos);
-
             FrontController frontController = new FrontController();
             String viewName = frontController.handleRequest(httpRequest);
+            logger.debug("viewName : {}", viewName);
 
+            DataOutputStream dos = new DataOutputStream(out);
+            byte[] message = ViewResolver.handleView(viewName, httpRequest);
 
-
-
-
+            sendRequestMessage(dos, message);
             connection.close();
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        }
+    }
 
+    public void sendRequestMessage(DataOutputStream dos, byte[] body) {
+        try {
+            dos.write(body, 0, body.length);
+            dos.flush();
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

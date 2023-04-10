@@ -7,54 +7,54 @@ import java.util.Map;
 import static util.HttpParser.*;
 
 public class HttpRequest {
-    private final String HTTP_METHOD;
-    private final String HTTP_URI;
-    private final String HTTP_URI_PATH;
-    private final String HTTP_URI_ROOT_PATH;
-    private final String HTTP_VERSION;
-    private final Map<String, String> QUERY_PARAMETER;
-    private final Map<String, String> HTTP_REQUEST_HEADER;
+    private final String httpMethod;
+    private final String httpUri;
+    private final String httpUriPath;
+    private final String httpUriRootPath;
+    private final String httpVersion;
+    private final Map<String, String> httpQueryParameters;
+    private final Map<String, String> httpRequestHeader;
 
     public HttpRequest(BufferedReader br) throws IOException {
         String requestLine = br.readLine();
-        this.HTTP_METHOD = parseMethod(requestLine);
-        this.HTTP_URI = parseUri(requestLine);
-        this.HTTP_URI_PATH = parseUriPath(requestLine);
-        this.HTTP_URI_ROOT_PATH = parseUriRootPath(requestLine);
-        this.HTTP_VERSION = parseVersion(requestLine);
-        this.HTTP_REQUEST_HEADER = parseRequestHeader(br);
-        this.QUERY_PARAMETER = parseQueryParameter(requestLine);
+        this.httpMethod = parseMethod(requestLine);
+        this.httpUri = parseUri(requestLine);
+        this.httpUriPath = parseUriPath(requestLine);
+        this.httpUriRootPath = parseUriRootPath(requestLine);
+        this.httpVersion = parseVersion(requestLine);
+        this.httpQueryParameters = parseRequestHeader(br);
+        this.httpRequestHeader = parseQueryParameter(requestLine);
     }
 
     public String getHttpMethod() {
-        return HTTP_METHOD;
+        return httpMethod;
     }
 
     public String getHttpUri() {
-        return HTTP_URI;
+        return httpUri;
     }
 
     public String getHttpUriPath() {
-        return HTTP_URI_PATH;
+        return httpUriPath;
     }
 
     public String getHttpUriRootPath() {
-        return HTTP_URI_ROOT_PATH;
+        return httpUriRootPath;
     }
 
     public String getHttpVersion() {
-        return HTTP_VERSION;
+        return httpVersion;
     }
 
     public Map<String, String> getQueryParameter() {
-        return QUERY_PARAMETER;
+        return httpQueryParameters;
     }
 
     public Map<String, String> getHttpRequestHeader() {
-        return HTTP_REQUEST_HEADER;
+        return httpRequestHeader;
     }
 
     public String getHttpHeaderValue(String headerName) {
-        return HTTP_REQUEST_HEADER.get(headerName);
+        return httpRequestHeader.get(headerName);
     }
 }
