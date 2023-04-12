@@ -10,16 +10,16 @@ public enum ContentType {
     private final String fileExtension;
     private final String fileLocation;
 
-    ContentType(String FILE_EXTENSION, String FILE_LOCATION) {
-        this.fileExtension = FILE_EXTENSION;
-        this.fileLocation = FILE_LOCATION;
+    ContentType(String fileExtension, String fileLocation) {
+        this.fileExtension = fileExtension;
+        this.fileLocation = fileLocation;
     }
 
-    public String getFILE_EXTENSION() {
+    public String getFileExtension() {
         return fileExtension;
     }
 
-    public String getFILE_LOCATION() {
+    public String getFileLocation() {
         return fileLocation;
     }
 }

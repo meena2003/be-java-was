@@ -1,6 +1,7 @@
 package webserver;
 
 //import config.AppConfig;
+import Controller.UriMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import view.ViewResolver;
@@ -23,6 +24,13 @@ public class RequestHandler implements Runnable {
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             HttpRequest httpRequest = new HttpRequest(br);
+
+
+            String uri = httpRequest.getHttpUri();
+            UriMapper uriMapper = new UriMapper();
+
+            String viewName = uriMapper.uriMap(uri);
+            ViewResolver viewResolver = ViewResolver.handleView(viewName, httpRequest);
 
             FrontController frontController = new FrontController();
             String viewName = frontController.handleRequest(httpRequest);
