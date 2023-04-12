@@ -26,6 +26,17 @@ public class HttpParser {
     }
 
     /**
+     * request line을 파싱하여 반환합니다.
+     * @param br
+     * @return
+     */
+    public static String parseRequestLine(BufferedReader br) throws IOException {
+        String requestLine = br.readLine();
+        log.debug("requestLine = {}", requestLine);
+        return requestLine;
+    }
+
+    /**
      * 전체 URI를 파싱하여 반환합니다.
      *
      * @param requestLine
@@ -44,6 +55,7 @@ public class HttpParser {
      * @return http URI (예시: /index.html, /user/create)
      */
     public static String parseUriPath(String requestLine) {
+        log.debug("request Line = {} ",requestLine);
         String httpUriPath = parseUri(requestLine).split("\\?")[0];
         log.debug("httpURIPath : {}", httpUriPath);
         return httpUriPath;
