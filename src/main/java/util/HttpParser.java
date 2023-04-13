@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -115,7 +117,6 @@ public class HttpParser {
     public static Map<String, String> parseQueryParameter(String requestLine) {
         String[] queryString = parseUri(requestLine).split("\\?");
         log.debug("queryString = {}", Arrays.toString(queryString));
-
         if (queryString.length == 1) {
             return new HashMap<>();
         }
@@ -126,7 +127,8 @@ public class HttpParser {
         while (st.hasMoreTokens()) {
             String[] keyAndValue = st.nextToken().split("=");
             log.debug("queryParameter : {}", Arrays.toString(keyAndValue));
-            queryParameter.put(keyAndValue[0], keyAndValue[1]);
+            String value = URLDecoder.decode(keyAndValue[1], StandardCharsets.UTF_8); // 한글, 특수문자 URL 디코딩
+            queryParameter.put(keyAndValue[0], value);
         }
 
         return queryParameter;
