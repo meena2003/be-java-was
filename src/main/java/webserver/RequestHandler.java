@@ -30,8 +30,6 @@ public class RequestHandler implements Runnable {
             FrontController frontController = new FrontController();
             frontController.handleRequest(httpRequest, httpResponse);
 
-
-
             connection.close();
 
         } catch (IOException e) {

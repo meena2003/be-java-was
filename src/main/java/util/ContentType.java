@@ -6,11 +6,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 public enum ContentType {
-    HTML(".+\\.html", "src/main/java/resources/templates", "text/html"),
-    CSS(".+\\.css", "src/main/java/resources/static", "text/css"),
-    JS(".+\\.js", "src/main/java/resources/static", "text/css"),
-    PNG(".+\\.png", "src/main/java/resources/static", "image/png"),
-    ICO(".+\\.ico", "src/main/java/resources/static", "image/x-icon");
+    HTML(".+\\.html", "src/main/resources/templates", "text/html;charset=utf-8"),
+    ICO(".+\\.ico", "src/main/resources/templates", "image/x-icon"),
+    CSS(".+\\.css", "src/main/resources/static", "text/css"),
+    JS(".+\\.js", "src/main/resources/static", "text/css"),
+    PNG(".+\\.png", "src/main/resources/static", "image/png"),
+    FONT(".+\\.eot|.+\\.svg|.+\\.ttf|.+\\.woff|.+\\.woff2", "src/main/resource/static", "*/*");
 
     private static final Logger log = LoggerFactory.getLogger("ContentType");
     final String extension;
