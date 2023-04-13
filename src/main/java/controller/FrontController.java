@@ -11,47 +11,18 @@ import java.util.Map;
 
 public class FrontController {
     private static final Logger log = LoggerFactory.getLogger(FrontController.class);
-    private Map<String, Handler> handlerMap;
-    private Controller controller;
+    private final Map<String, Handler> handlerMap;
 
     public FrontController() {
         handlerMap = new HashMap<>();
-        handlerMap.put("/", new HomeHandler());
-        handlerMap.put("/index.html", new HomeHandler());
-        handlerMap.put("/user", new UserHandler());
+//        handlerMap.put("/user", new UserHandler());
     }
 
     public void handleRequest(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
-        String uriRootPath = httpRequest.getHttpUriRootPath();
-        log.debug("uriRootPath : {}", uriRootPath);
-        Handler handler = handlerMap.get(uriRootPath);
-        if (handler == null) {
-            log.error("Requested resource not found");
-        }
-        handler.handle(httpRequest, httpResponse);
-    }
+        String uri = httpRequest.getUri();
 
-    public interface Handler {
-        void handle(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException;
-    }
-
-    public class HomeHandler implements Handler {
-        @Override
-        public void handle(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
-            String uri = httpRequest.getHttpUriPath();
-            byte[] body = httpResponse.readFile(uri);
-            httpResponse.response200Header(body.length);
-            httpResponse.responseBody(body);
-        }
-    }
-
-    public class UserHandler implements Handler {
-        @Override
-        public void handle(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
-            controller = new UserController();
-            controller.run(httpRequest);
-            String uri = httpRequest.getHttpUriPath();
-            byte[] body = httpResponse.readFile(uri);
+        if (uri.equals("/")) {
+            byte[] body = httpResponse.readFile("/index.html");
             httpResponse.response200Header(body.length);
             httpResponse.responseBody(body);
         }
