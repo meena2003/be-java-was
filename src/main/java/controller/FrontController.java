@@ -32,5 +32,11 @@ public class FrontController {
             httpResponse.response200Header(body.length);
             httpResponse.responseBody(body);
         }
+
+        if (uri.equals("/user/form.html")) {
+            byte[] body = httpResponse.readFile("/user/form.html");
+            httpResponse.response200Header(body.length);
+            httpResponse.responseBody(body);
+        }
     }
 }
