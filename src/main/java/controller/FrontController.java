@@ -14,6 +14,14 @@ public class FrontController {
     public void handleRequest(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         String uri = httpRequest.getUri();
 
+        if (uri.equals("/")) {
+            uri = "/index.html";
+        }
+
+
+
+
+
         // 컨텐트 타입에 해당하는 확장자가 있다면,
         // accept에 해당하는 확장자가 있다면,
 
