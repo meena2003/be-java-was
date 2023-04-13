@@ -2,6 +2,7 @@ package controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.UserService;
 import webserver.HttpRequest;
 import webserver.HttpResponse;
 
@@ -35,6 +36,18 @@ public class FrontController {
 
         if (uri.equals("/user/form.html")) {
             byte[] body = httpResponse.readFile("/user/form.html");
+            httpResponse.response200Header(body.length);
+            httpResponse.responseBody(body);
+        }
+
+        if (uri.startsWith("/user/create")) {
+            String userId = httpRequest.getQueryParameter("userId");
+            String password = httpRequest.getQueryParameter("password");
+            String name = httpRequest.getQueryParameter("name");
+            String email = httpRequest.getQueryParameter("email");
+            UserService.join(userId, password, name, email);
+
+            byte[] body = httpResponse.readFile("/index.html");
             httpResponse.response200Header(body.length);
             httpResponse.responseBody(body);
         }

@@ -35,8 +35,8 @@ public class HttpRequest {
         return version;
     }
 
-    public Map<String, String> getQueryParameter() {
-        return queryParameter;
+    public String getQueryParameter(String key) {
+        return queryParameter.get(key);
     }
 
     public Map<String, String> getRequestHeaders() {
